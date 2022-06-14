@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -40,6 +41,9 @@ public class Stadium {
     private LocalDateTime createDate;
     @LastModifiedDate
     private LocalDateTime updateDate;
+
+    @Transient
+    private String no;
 
     // @Builder
     // public Stadium(Integer id, String name, LocalDateTime createDate,

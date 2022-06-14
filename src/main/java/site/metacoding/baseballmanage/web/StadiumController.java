@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import lombok.RequiredArgsConstructor;
 import site.metacoding.baseballmanage.domain.stadium.Stadium;
 import site.metacoding.baseballmanage.service.StadiumService;
+import site.metacoding.baseballmanage.web.dto.StadiumRespDto;
 
 @RequiredArgsConstructor
 @Controller
@@ -22,7 +23,7 @@ public class StadiumController {
 
     @GetMapping({ "/", "/stadium/list" })
     public String main(Model model) {
-        List<Stadium> stadiums = stadiumService.stadiumFindAll();
+        List<StadiumRespDto> stadiums = stadiumService.stadiumFindAll();
         model.addAttribute("stadiums", stadiums);
         return "/stadium/stadiumList";
     }
