@@ -1,0 +1,29 @@
+{{>/layout/header}}
+
+<div class="container mt-5">
+
+    <h2 class="mb-5" style="text-align:center">퇴출 사유 등록</h2>
+
+    <form class="form" action="#">
+        <div class="my_flex_center">
+            <label for="player-list" class="mr-sm-3">선수 이름 :</label>
+            <select class="form-control col-6 mb-3 mr-sm-2" id="player-list">
+                <option>구창모</option>
+            </select>
+        </div>
+
+
+
+        <div class="my_flex_center">
+            <label class="mr-sm-3">퇴출 사유 :</label>
+            <input name="team" type="text" class="form-control mb-2 mr-sm-2 col-6" placeholder="퇴출 사유를 입력하세요." required>
+        </div>
+
+        <div class="my_flex_center mt-5">
+            <button type="submit" class="btn btn-primary mb-2" style="text-align:center">등록</button>
+        </div>
+    </form>
+
+</div>
+
+{{>/layout/footer}}
