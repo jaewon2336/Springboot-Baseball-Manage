@@ -15,13 +15,15 @@
             </tr>
         </thead>
         <tbody>
+            {{#stadiums}}
             <tr>
-                <th scope="row">1</th>
-                <td>창원NC파크</td>
-                <td>2022-06-14</td>
+                <th scope="row">{{id}}</th>
+                <td>{{name}}</td>
+                <td>{{formatCreateDate}}</td>
                 <td><i class="fa-solid fa-wrench"></i></td>
                 <td><i class="fa-solid fa-trash"></i></td>
             </tr>
+            {{/stadiums}}
         </tbody>
     </table>
 

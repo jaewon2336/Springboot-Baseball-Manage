@@ -1,18 +1,39 @@
 package site.metacoding.baseballmanage.web;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import java.util.List;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import lombok.RequiredArgsConstructor;
+import site.metacoding.baseballmanage.domain.stadium.Stadium;
+import site.metacoding.baseballmanage.service.StadiumService;
+
+@RequiredArgsConstructor
 @Controller
 public class StadiumController {
 
+    private final StadiumService stadiumService;
+
     @GetMapping({ "/", "/stadium/list" })
-    public String main() {
+    public String main(Model model) {
+        List<Stadium> stadiums = stadiumService.stadiumFindAll();
+        model.addAttribute("stadiums", stadiums);
         return "/stadium/stadiumList";
     }
 
     @GetMapping("/stadium/save-form")
     public String saveForm() {
+        System.out.println("1");
         return "/stadium/stadiumSaveForm";
+    }
+
+    @PostMapping("/stadium/save")
+    public String save(String name) {
+        stadiumService.stadiumSave(name);
+        return "redirect:/stadium/list";
     }
 }
