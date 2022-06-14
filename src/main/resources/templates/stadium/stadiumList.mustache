@@ -17,17 +17,27 @@
         <tbody>
             {{#stadiums}}
             <tr>
-                <th scope="row">{{id}}</th>
+                <th id="my-stadium-id" scope="row">{{id}}</th>
                 <td>{{name}}</td>
                 <td>{{formatCreateDate}}</td>
                 <td><i class="fa-solid fa-wrench"></i></td>
-                <td><i class="fa-solid fa-trash"></i></td>
+                <td id="my-stadium-delete"><i class="fa-solid fa-trash"></i></td>
             </tr>
             {{/stadiums}}
         </tbody>
     </table>
 
 </div>
+
+<script>
+    $("#my-stadium-delete").click(() => {
+        deleteStadium();
+    });
+
+    async function deleteStadium() {
+
+    }
+</script>
 
 </body>
 

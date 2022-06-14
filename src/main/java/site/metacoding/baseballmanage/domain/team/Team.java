@@ -28,7 +28,7 @@ import site.metacoding.baseballmanage.domain.stadium.Stadium;
 @Entity
 public class Team {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @JoinColumn(name = "stadiumId")

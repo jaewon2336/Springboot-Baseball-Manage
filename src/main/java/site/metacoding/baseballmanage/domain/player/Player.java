@@ -28,7 +28,7 @@ import site.metacoding.baseballmanage.domain.team.Team;
 @Entity
 public class Player {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @JoinColumn(name = "teamId")

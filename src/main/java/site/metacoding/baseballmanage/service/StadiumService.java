@@ -15,7 +15,8 @@ public class StadiumService {
     private final StadiumRepository stadiumRepository;
 
     public void stadiumSave(String name) {
-        Stadium stadium = Stadium.builder().name(name).build();
+        Stadium stadium = new Stadium();
+        stadium.setName(name);
         stadiumRepository.save(stadium);
     }
 

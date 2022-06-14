@@ -9,15 +9,18 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Data
 @EntityListeners(AuditingEntityListener.class)
@@ -25,7 +28,9 @@ import lombok.NoArgsConstructor;
 public class Stadium {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "xxx_SEQUENCE_GENERATOR")
+    @SequenceGenerator(name = "xxx_SEQUENCE_GENERATOR", sequenceName = "xxx_SEQUENCE", initialValue = 1, allocationSize = 1)
     private Integer id;
 
     @Column(nullable = false, unique = true)
@@ -36,13 +41,14 @@ public class Stadium {
     @LastModifiedDate
     private LocalDateTime updateDate;
 
-    @Builder
-    public Stadium(Integer id, String name, LocalDateTime createDate, LocalDateTime updateDate) {
-        this.id = id;
-        this.name = name;
-        this.createDate = createDate;
-        this.updateDate = updateDate;
-    }
+    // @Builder
+    // public Stadium(Integer id, String name, LocalDateTime createDate,
+    // LocalDateTime updateDate) {
+    // this.id = id;
+    // this.name = name;
+    // this.createDate = createDate;
+    // this.updateDate = updateDate;
+    // }
 
     public String getFormatCreateDate() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
