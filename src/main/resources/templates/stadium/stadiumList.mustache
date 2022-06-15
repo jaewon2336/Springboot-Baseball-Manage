@@ -14,29 +14,57 @@
                 <th scope="col">삭제</th>
             </tr>
         </thead>
-        <tbody>
-            {{#stadiums}}
-            <tr>
-                <th id="my-stadium-id" scope="row">{{no}}</th>
-                <td>{{name}}</td>
-                <td>{{createDate}}</td>
-                <td><i class="fa-solid fa-wrench"></i></td>
-                <td id="my-stadium-delete"><i class="fa-solid fa-trash"></i></td>
-            </tr>
-            {{/stadiums}}
+        <tbody id="row-box">
+
         </tbody>
     </table>
 
 </div>
 
 <script>
-    $("#my-stadium-delete").click(() => {
-        deleteStadium();
-    });
 
-    async function deleteStadium() {
 
+    // 목록 뿌리기
+    async function findAll() {
+        let response = await fetch("/api/stadium");
+        let responseParse = await response.json();
+
+        if (response.status == 200) {
+            responseParse.forEach((stadium) => {
+                $("#row-box").append(stadiumListRender(stadium));
+            });
+        } else {
+            alert("통신 실패");
+        }
     }
+
+    function stadiumListRender(stadium) {
+        return `<tr id="row-${stadium.id}">
+                    <th scope="row">${stadium.no}</th>
+                    <td>${stadium.name}</td>
+                    <td>${stadium.createDate}</td>
+                    <td><i class="fa-solid fa-wrench"></i></td>
+                    <td><i class="fa-solid fa-trash" onclick="deleteById(${stadium.id})"></i></td>
+                </tr>`;
+    }
+
+    findAll();
+
+    // row 삭제
+    async function deleteById(id) {
+        let response = await fetch(`/api/stadium/${id}`, {
+            method: "DELETE"
+        });
+
+        if (response.status == 200) {
+            // row 삭제
+            $(`#row-${id}`).empty();
+        } else {
+            alert("삭제 실패");
+        }
+    }
+
+
 </script>
 
 </body>

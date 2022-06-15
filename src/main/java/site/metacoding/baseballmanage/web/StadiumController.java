@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import lombok.RequiredArgsConstructor;
@@ -21,27 +22,31 @@ public class StadiumController {
 
     private final StadiumService stadiumService;
 
-    @GetMapping({ "/", "/stadium/list" })
-    public String main(Model model) {
-        List<StadiumRespDto> stadiums = stadiumService.stadiumFindAll();
-        model.addAttribute("stadiums", stadiums);
+    @GetMapping({ "/", "/stadium" })
+    public String main() {
         return "/stadium/stadiumList";
+    }
+
+    @GetMapping("/api/stadium")
+    public ResponseEntity<?> findAll() {
+        List<StadiumRespDto> stadiums = stadiumService.findAll();
+        return new ResponseEntity<>(stadiums, HttpStatus.OK);
     }
 
     @GetMapping("/stadium/save-form")
     public String saveForm() {
-        System.out.println("1");
         return "/stadium/stadiumSaveForm";
     }
 
     @PostMapping("/stadium")
     public String save(String name) {
-        stadiumService.stadiumSave(name);
-        return "redirect:/stadium/list";
+        stadiumService.save(name);
+        return "redirect:/stadium";
     }
 
-    @DeleteMapping("/stadium")
-    public ResponseEntity<?> delete(Integer id) {
+    @DeleteMapping("/api/stadium/{id}")
+    public ResponseEntity<?> delete(@PathVariable Integer id) {
+        stadiumService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

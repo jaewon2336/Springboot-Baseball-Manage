@@ -21,7 +21,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Data
 @EntityListeners(AuditingEntityListener.class)
@@ -45,14 +44,14 @@ public class Stadium {
     @Transient
     private String no;
 
-    // @Builder
-    // public Stadium(Integer id, String name, LocalDateTime createDate,
-    // LocalDateTime updateDate) {
-    // this.id = id;
-    // this.name = name;
-    // this.createDate = createDate;
-    // this.updateDate = updateDate;
-    // }
+    @Builder
+    public Stadium(Integer id, String name, LocalDateTime createDate,
+            LocalDateTime updateDate) {
+        this.id = id;
+        this.name = name;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
+    }
 
     public String getFormatCreateDate() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

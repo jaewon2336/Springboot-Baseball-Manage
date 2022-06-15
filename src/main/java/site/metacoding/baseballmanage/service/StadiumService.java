@@ -20,20 +20,24 @@ public class StadiumService {
     private final StadiumRepository stadiumRepository;
     private final EntityManager em;
 
-    public void stadiumSave(String name) {
-        Stadium stadium = new Stadium();
-        stadium.setName(name);
+    public void save(String name) {
+        Stadium stadium = Stadium.builder().name(name).build();
         stadiumRepository.save(stadium);
     }
 
-    public List<StadiumRespDto> stadiumFindAll() {
+    public List<StadiumRespDto> findAll() {
 
-        String sql = "SELECT rownum no, name, createDate FROM (SELECT * FROM stadium ORDER BY name)";
+        // no
+        String sql = "SELECT id, rownum no, name, to_char(createDate, 'YYYY-MM-DD') createDate FROM (SELECT * FROM stadium ORDER BY name)";
         Query query = em.createNativeQuery(sql);
 
         JpaResultMapper mapper = new JpaResultMapper();
         List<StadiumRespDto> stadiums = mapper.list(query, StadiumRespDto.class);
 
         return stadiums;
+    }
+
+    public void deleteById(Integer id) {
+        stadiumRepository.deleteById(id);
     }
 }
