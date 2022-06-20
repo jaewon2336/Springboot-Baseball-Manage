@@ -25,7 +25,7 @@ public class StadiumService {
         stadiumRepository.save(stadium);
     }
 
-    public List<StadiumRespDto> findAll() {
+    public List<StadiumRespDto> findAllDtos() {
 
         // no
         String sql = "SELECT id, rownum no, name, to_char(createDate, 'YYYY-MM-DD') createDate FROM (SELECT * FROM stadium ORDER BY name)";
@@ -35,6 +35,10 @@ public class StadiumService {
         List<StadiumRespDto> stadiums = mapper.list(query, StadiumRespDto.class);
 
         return stadiums;
+    }
+
+    public List<Stadium> findAll() {
+        return stadiumRepository.findAll();
     }
 
     public void deleteById(Integer id) {

@@ -11,24 +11,27 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import site.metacoding.baseballmanage.domain.stadium.Stadium;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Data
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 public class Team {
     @Id
-    // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TEAM_SEQUENCE_GENERATOR")
+    @SequenceGenerator(name = "TEAM_SEQUENCE_GENERATOR", sequenceName = "TEAM_SEQUENCE", initialValue = 1, allocationSize = 1)
     private Integer id;
 
     @JoinColumn(name = "stadiumId")
@@ -42,6 +45,15 @@ public class Team {
     private LocalDateTime createDate;
     @LastModifiedDate
     private LocalDateTime updateDate;
+
+    @Builder
+    public Team(Integer id, Stadium stadium, String name, LocalDateTime createDate, LocalDateTime updateDate) {
+        this.id = id;
+        this.stadium = stadium;
+        this.name = name;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
+    }
 
     public String getFormatCreateDate() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

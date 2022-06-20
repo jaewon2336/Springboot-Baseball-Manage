@@ -9,6 +9,7 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
 
@@ -16,10 +17,10 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import site.metacoding.baseballmanage.domain.team.Team;
 
 @NoArgsConstructor
 @Data
@@ -28,13 +29,15 @@ import lombok.NoArgsConstructor;
 public class Stadium {
 
     @Id
-    // @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "xxx_SEQUENCE_GENERATOR")
-    @SequenceGenerator(name = "xxx_SEQUENCE_GENERATOR", sequenceName = "xxx_SEQUENCE", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STADIUM_SEQUENCE_GENERATOR")
+    @SequenceGenerator(name = "STADIUM_SEQUENCE_GENERATOR", sequenceName = "STADIUM_SEQUENCE", initialValue = 1, allocationSize = 1)
     private Integer id;
 
     @Column(nullable = false, unique = true)
     private String name;
+
+    @OneToOne(mappedBy = "stadium")
+    private Team team;
 
     @CreatedDate
     private LocalDateTime createDate;

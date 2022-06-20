@@ -15,19 +15,57 @@
                 <th scope="col">삭제</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>창원NC파크</td>
-                <td>NC다이노스</td>
-                <td>2022-06-14</td>
-                <td><i class="fa-solid fa-wrench"></i></td>
-                <td><i class="fa-solid fa-trash"></i></td>
-            </tr>
+        <tbody id="row-box">
+
         </tbody>
     </table>
 
 </div>
+
+<script>
+    // 목록 뿌리기
+    async function findAll() {
+        let response = await fetch("/api/team");
+        let responseParse = await response.json();
+
+        if (response.status == 200) {
+            responseParse.forEach((team) => {
+                $("#row-box").append(teamListRender(team));
+            });
+        } else {
+            alert("통신 실패");
+        }
+    }
+
+    function teamListRender(team) {
+        return `<tr id="row-${team.id}">
+                    <th scope="row">${team.no}</th>
+                    <td>${team.stadiumId}</td>
+                    <td>${team.name}</td>
+                    <td>${team.createDate}</td>
+                    <td><i class="fa-solid fa-wrench"></i></td>
+                    <td><i class="fa-solid fa-trash" onclick="deleteById(${team.id})"></i></td>
+                </tr>`;
+    }
+
+    findAll();
+
+    // row 삭제
+    async function deleteById(id) {
+
+        let response = await fetch(`/api/team/${id}`, {
+            method: "DELETE"
+        });
+
+        if (response.status == 200) {
+            // row 삭제
+            $(`#row-${id}`).empty();
+        } else {
+            alert("삭제 실패");
+        }
+    }
+
+</script>
 
 </body>
 

@@ -52,6 +52,7 @@
 
     // row 삭제
     async function deleteById(id) {
+
         let response = await fetch(`/api/stadium/${id}`, {
             method: "DELETE"
         });

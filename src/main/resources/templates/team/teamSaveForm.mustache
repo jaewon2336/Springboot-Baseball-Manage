@@ -4,26 +4,56 @@
 
     <h2 class="mb-5" style="text-align:center">팀 등록</h2>
 
-    <form class="form" action="#">
+    <form class="form">
         <div class="my_flex_center">
             <label for="stadium-list" class="mr-sm-3">야구장 이름 :</label>
-            <select class="form-control col-6 mb-3 mr-sm-3" id="stadium-list">
-                <option>창원NC파크</option>
+            <select id="stadium" class="form-control col-6 mb-3 mr-sm-3">
+                {{#stadiums}}
+                <option value="{{id}}">{{name}}</option>
+                {{/stadiums}}
             </select>
         </div>
 
-
-
         <div class="my_flex_center">
             <label class="mr-sm-3 ml-4">팀 이름 :</label>
-            <input name="team" type="text" class="form-control mb-2 mr-sm-2 col-6" placeholder="팀 이름을 입력하세요." required>
+            <input id="team" type="text" class="form-control mb-2 mr-sm-2 col-6" placeholder="팀 이름을 입력하세요." required>
         </div>
 
         <div class="my_flex_center mt-5">
-            <button type="submit" class="btn btn-primary mb-2" style="text-align:center">등록</button>
+            <button id="btn-submit" type="button" class="btn btn-primary mb-2" style="text-align:center">등록</button>
         </div>
     </form>
 
 </div>
+
+<script>
+    $("#btn-submit").click(() => {
+        teamSave();
+    });
+
+    async function teamSave() {
+        let saveDto = {
+            stadiumId: $("#stadium").val(), // stadiumId
+            name: $("#team").val() // teamName
+        }
+
+        let response = await fetch("/team", {
+            method: 'POST',
+            body: JSON.stringify(saveDto),
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            }
+        });
+
+        if (response.status == 201) {
+            location.href = "/team";
+        } else {
+            alert("해당 야구장에는 이미 팀이 존재합니다.");
+        }
+    }
+
+
+
+</script>
 
 {{>/layout/footer}}
