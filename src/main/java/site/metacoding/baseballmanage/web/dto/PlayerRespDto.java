@@ -9,9 +9,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class StadiumRespDto {
-    private BigDecimal id;
+public class PlayerRespDto {
     private BigDecimal no;
+    private BigDecimal id;
+    private String team;
+    private String position;
     private String name;
     private String createDate;
+
 }

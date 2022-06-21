@@ -3,24 +3,16 @@ package site.metacoding.baseballmanage.web.dto;
 import java.math.BigDecimal;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import site.metacoding.baseballmanage.domain.stadium.Stadium;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
 public class TeamRespDto {
-    private BigDecimal id;
     private BigDecimal no;
-    private BigDecimal stadiumId;
+    private BigDecimal id;
+    private String stadium;
     private String name;
     private String createDate;
-
-    // private StadiumDto stadiumDto;
-
-    public class StadiumDto {
-        private BigDecimal id;
-        private String name;
-    }
 }

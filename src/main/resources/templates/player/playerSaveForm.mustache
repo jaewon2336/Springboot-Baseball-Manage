@@ -4,29 +4,62 @@
 
     <h2 class="mb-5" style="text-align:center">선수 등록</h2>
 
-    <form class="form" action="#">
+    <form class="form">
         <div class="my_flex_center">
             <label for="team-list" class="mr-sm-3 ml-sm-4">팀 이름 :</label>
-            <select class="form-control col-6 mb-3 mr-sm-3" id="team-list">
-                <option>NC다이노스</option>
+            <select id="team" class="form-control col-6 mb-3 mr-sm-3">
+                {{#teams}}
+                <option value="{{id}}">{{name}}</option>
+                {{/teams}}
             </select>
         </div>
 
         <div class="my_flex_center">
             <label class="mr-sm-3 ml-4">선수 이름 :</label>
-            <input name="team" type="text" class="form-control mb-3 mr-sm-4 col-6" placeholder="선수 이름을 입력하세요." required>
+            <input id="name" type="text" class="form-control mb-3 mr-sm-4 col-6" placeholder="선수 이름을 입력하세요." required>
         </div>
 
         <div class="my_flex_center">
             <label class="mr-sm-3 ml-4">포지션 :</label>
-            <input name="team" type="text" class="form-control mb-3 mr-sm-2 col-6" placeholder="포지션을 입력하세요." required>
+            <input id="position" type="text" class="form-control mb-3 mr-sm-2 col-6" placeholder="포지션을 입력하세요." required>
         </div>
 
         <div class="my_flex_center mt-5">
-            <button type="submit" class="btn btn-primary mb-2" style="text-align:center">등록</button>
+            <button id="btn-save" type="button" class="btn btn-primary mb-2" style="text-align:center">등록</button>
         </div>
     </form>
 
 </div>
+
+<script>
+    $("#btn-save").click(() => {
+        playerSave();
+    });
+
+    async function playerSave() {
+        let saveDto = {
+            teamId: $("#team").val(), // teamId
+            position: $("#position").val(), // position
+            name: $("#name").val() // name
+        }
+
+        console.log(saveDto);
+
+        let response = await fetch("/player", {
+            method: 'POST',
+            body: JSON.stringify(saveDto),
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            }
+        });
+
+        if (response.status == 201) {
+            location.href = "/player/list";
+        } else {
+            alert("선수 추가 실패");
+        }
+
+    }
+</script>
 
 {{>/layout/footer}}

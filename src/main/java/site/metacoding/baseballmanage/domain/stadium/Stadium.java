@@ -17,6 +17,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,6 +38,7 @@ public class Stadium {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @JsonIgnoreProperties({ "stadium" })
     @OneToOne(mappedBy = "stadium")
     private Team team;
 

@@ -8,6 +8,7 @@ import javax.persistence.Query;
 
 import org.qlrm.mapper.JpaResultMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import site.metacoding.baseballmanage.domain.stadium.Stadium;
@@ -27,6 +28,7 @@ public class TeamService {
 
     private final EntityManager em;
 
+    @Transactional
     public void save(TeamSaveRepDto teamSaveRepDto) {
         Integer stadiumId = teamSaveRepDto.getStadiumId();
         String name = teamSaveRepDto.getName();
@@ -52,7 +54,7 @@ public class TeamService {
 
     public List<TeamRespDto> findAllDtos() {
         // no
-        String sql = "SELECT id, rownum no, stadiumId, name, to_char(createDate, 'YYYY-MM-DD') createDate FROM (SELECT * FROM team ORDER BY name)";
+        String sql = "SELECT rownum no, a.* FROM (SELECT t.id, s.name stadium, t.name, to_char(t.createDate, 'YYYY-MM-DD') createDate FROM team t inner join stadium s on t.stadiumid = s.id ORDER BY t.name)a";
         Query query = em.createNativeQuery(sql);
 
         JpaResultMapper mapper = new JpaResultMapper();
@@ -65,6 +67,7 @@ public class TeamService {
         return teamRepository.findAll();
     }
 
+    @Transactional
     public void deleteById(Integer id) {
         teamRepository.deleteById(id);
     }

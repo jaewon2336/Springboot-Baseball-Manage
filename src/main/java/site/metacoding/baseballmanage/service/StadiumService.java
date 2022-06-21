@@ -7,6 +7,7 @@ import javax.persistence.Query;
 
 import org.qlrm.mapper.JpaResultMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import site.metacoding.baseballmanage.domain.stadium.Stadium;
@@ -20,6 +21,7 @@ public class StadiumService {
     private final StadiumRepository stadiumRepository;
     private final EntityManager em;
 
+    @Transactional
     public void save(String name) {
         Stadium stadium = Stadium.builder().name(name).build();
         stadiumRepository.save(stadium);
@@ -41,6 +43,7 @@ public class StadiumService {
         return stadiumRepository.findAll();
     }
 
+    @Transactional
     public void deleteById(Integer id) {
         stadiumRepository.deleteById(id);
     }
